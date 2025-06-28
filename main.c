@@ -1,29 +1,5 @@
-#include "mlx/mlx.h"
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-
+#include "so_long.h"
 #define ON_DESTROY 17
-
-typedef struct  s_imgs
-{
-    void *apple1;
-    void *apple2;
-    void *apple3;
-    void *grass;
-    void *kitty;
-    void *water;
-} t_imgs;
-
-
-typedef struct s_game
-{
-    t_imgs *imgs;
-    void *mlx;
-    void *win;
-    char *map[4];
-    int player_pos[2];
-} t_game;
 
 void render(t_game *game){
     int i=0;
@@ -107,9 +83,6 @@ int key_hook_function(int key, void *s){
 return 0;
 }
 
-char **read_map(t_game *game){
-    return NULL;
-}
 
 int main(void){
     void	*mlx;
@@ -136,6 +109,8 @@ int main(void){
     game.imgs = &imgs;
     game.mlx = mlx;
     game.win = mlx_win;
+    read_map(&game);
+
     render(&game);
 
     mlx_key_hook(mlx_win, &key_hook_function, &game);

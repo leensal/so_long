@@ -1,3 +1,5 @@
+#include "so_long.h"
+
 char	*read_file(int fd)
 {
 	char	buf[BUFFER_SIZE + 1];
@@ -25,6 +27,17 @@ char	*read_file(int fd)
 
 void read_map(t_game *game)
 {
-    char **map;
-    game->map = map;
+    (void)game;
+    char *file;
+
+    int fd = open("map.ber", O_RDONLY);
+    if (fd < 0)
+    {
+        perror("Error opening map file");
+        exit(EXIT_FAILURE);
+    }
+    
+    file = read_file(fd);
+    printf("Reading map...\n");
+    printf("%s\n", file);
 }
