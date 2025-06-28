@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define ON_DESTROY 17
+
 typedef struct  s_imgs
 {
     void *apple1;
@@ -14,14 +16,44 @@ typedef struct  s_imgs
 } t_imgs;
 
 
-typedef struct s_main
+typedef struct s_game
 {
     t_imgs *imgs;
     void *mlx;
     void *win;
-    char map[3][5];
-} t_main;
+    char *map[4];
+    int player_pos[2];
+} t_game;
 
+void render(t_game *game){
+    int i=0;
+    int j=0;
+    while(j<3){
+        i = 0;
+        while (i < 5){
+            if (game->map[j][i]== '1'){
+                mlx_put_image_to_window(game->mlx, game->win, game->imgs->water, i*16, j*16);
+            }
+            else if (game->map[j][i]== '0'){
+                mlx_put_image_to_window(game->mlx, game->win, game->imgs->grass, i*16, j*16);
+            }
+            else if(game->map[j][i]== 'C')
+            {
+                mlx_put_image_to_window(game->mlx, game->win, game->imgs->apple1, i*16, j*16);
+            }
+            else if(game->map[j][i]== 'P')
+            {
+                game->player_pos[0] = i;
+                game->player_pos[1] = j;
+                mlx_put_image_to_window(game->mlx, game->win, game->imgs->grass, i*16, j*16);
+                mlx_put_image_to_window(game->mlx, game->win, game->imgs->kitty, i*16, j*16);
+            }
+            i++;
+        }
+        j++;
+
+    }
+}
 
 void load_images(void *mlx, t_imgs *imgs)
 {
@@ -41,22 +73,31 @@ int on_destroy(void *s){
     return 0;
 }
 
-int key_hook(int key, void *s){
-    t_main *main;
+// void move(t_game *game, int x, int y){
+//     game->map[game->player_pos[1]][game->player_pos[0]] = '0';
+//     game->player_pos[0] += x;
+//     game->player_pos[1] += y;
+//     game->map[game->player_pos[1]][game->player_pos[0]] = 'P';
+//     render(game);
+    
+// }
 
-    main = s;
+int key_hook_function(int key, void *s){
+    t_game *game;
+
+    game = s;
 
     if (key == 0){
-
+        // move(game, -1, 0);
     }
     else if (key == 13){
-
+        // move(game, 0, -1);
+    }
+    else if (key == 1){
+        // move(game, 0, 1);
     }
     else if (key == 2){
-
-    }
-    else if(key== 1){
-
+        // move(game, 1, 0);
     }
     else if(key== 53){
         on_destroy(s);
@@ -66,68 +107,39 @@ int key_hook(int key, void *s){
 return 0;
 }
 
-void render(t_main *main){
-    int i=0;
-    int j=0;
-    while(j<3){
-        i = 0;
-        while (i < 5){
-            if (main->map[j][i]== '1'){
-                mlx_put_image_to_window(main->mlx, main->win, main->imgs->water, i*16, j*16);
-            }
-            else if (main->map[j][i]== '0'){
-                mlx_put_image_to_window(main->mlx, main->win, main->imgs->grass, i*16, j*16);
-            }
-            else if(main->map[j][i]== 'C')
-            {
-                mlx_put_image_to_window(main->mlx, main->win, main->imgs->apple1, i*16, j*16);
-            }
-            else if(main->map[j][i]== 'P')
-            {
-                mlx_put_image_to_window(main->mlx, main->win, main->imgs->grass, i*16, j*16);
-                mlx_put_image_to_window(main->mlx, main->win, main->imgs->kitty, i*16, j*16);
-            }
-            i++;
-        }
-        j++;
-
-    }
+char **read_map(t_game *game){
+    return NULL;
 }
 
-char **read_map(t_main *main){
-    
-
-}
-
-int main(){
+int main(void){
     void	*mlx;
     void	*mlx_win;
     void	*img;
     int		img_width;
 	int		img_height;
     t_imgs  imgs;
-    t_main main;
+    t_game game;
 
-    char static_map[3][5] = {
-        {'1','1','1','1','1'},
-        {'1','0','P','0','1'},
-        {'1','1','1','1','1'}
+    char *static_map[4] = {
+        "11111",
+        "10P01",
+        "11111"
     };
-    main.map = static_map;
 
+    for (int i = 0; i < 3; i++) {
+        game.map[i] = static_map[i];
+    }
+    game.map[3] = NULL; // Null-terminate the map array
 	mlx = mlx_init();
 	mlx_win = mlx_new_window(mlx, (16*5), (16*3), "Hello world!");
-    int i=0;
-    int j=0;
     load_images(mlx, &imgs);
-    render(&main);
+    game.imgs = &imgs;
+    game.mlx = mlx;
+    game.win = mlx_win;
+    render(&game);
 
-
-    main.imgs = &imgs;
-    main.mlx = mlx;
-    main.win = mlx_win;
-    mlx_key_hook(mlx_win, &key_hook, &main);
-    mlx_hook(mlx_win, 17, 0, &on_destroy, &main);
+    mlx_key_hook(mlx_win, &key_hook_function, &game);
+    mlx_hook(mlx_win, ON_DESTROY, 0, &on_destroy, &game);
 	mlx_loop(mlx);
     return 0;
 }
