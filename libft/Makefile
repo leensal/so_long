@@ -6,7 +6,7 @@
 #    By: lsahloul <lsahloul@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/06 13:39:19 by leen              #+#    #+#              #
-#    Updated: 2025/04/24 20:39:25 by lsahloul         ###   ########.fr        #
+#    Updated: 2025/07/17 18:34:08 by lsahloul         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,12 +18,10 @@ ft_isalnum.c   ft_memmove.c  ft_split.c   ft_strlcpy.c    ft_strtrim.c \
 ft_isalpha.c   ft_memset.c   ft_strchr.c   ft_strlen.c   ft_substr.c \
 ft_isascii.c   ft_putchar_fd.c   ft_strdup.c  ft_strmapi.c   ft_tolower.c \
 ft_printf/address_print.c     ft_printf/ft_printf.c         ft_printf/hexadecimal_print.c ft_printf/string_print.c \
-ft_printf/character_print.c     ft_printf/number_print.c      ft_printf/unsigned_print.c
+ft_printf/character_print.c     ft_printf/number_print.c      ft_printf/unsigned_print.c \
+ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c
 
 OBJS = $(FILES:.c=.o)
-
-BONUS	=  ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c
-BONUS_OBJS		= $(BONUS:.c=.o)
 
 CFLAGS			= -Wall -Wextra -Werror
 
@@ -45,5 +43,4 @@ fclean:			clean
 
 re:				fclean all
 
-bonus:			$(NAME) $(OBJS) $(BONUS_OBJS) 
-				ar rcs $(NAME) $(OBJS) $(BONUS_OBJS)
+.PHONY:			all clean fclean re bonus
