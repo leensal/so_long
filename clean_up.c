@@ -6,7 +6,7 @@
 /*   By: lsahloul <lsahloul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 18:46:22 by lsahloul          #+#    #+#             */
-/*   Updated: 2025/07/17 20:54:20 by lsahloul         ###   ########.fr       */
+/*   Updated: 2025/07/19 20:52:44 by lsahloul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ void	murder(t_game *game, const char *s)
 		mlx_destroy_window(game->mlx, game->win);
 		free(game->mlx);
 	}
-	free_split(game->map);
+	if (game->map)
+		free_split(game->map);
 	if (s)
 		perror(s);
 	exit(EXIT_FAILURE);

@@ -6,7 +6,7 @@
 /*   By: lsahloul <lsahloul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 18:45:46 by lsahloul          #+#    #+#             */
-/*   Updated: 2025/07/17 21:46:16 by lsahloul         ###   ########.fr       */
+/*   Updated: 2025/07/19 19:11:34 by lsahloul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,15 +97,8 @@ int	main(int argc, char **argv)
 	t_game		game;
 
 	if (argc != 2)
-	{
-		ft_printf("Usage: ./so_long <map_file>\n");
-		return (1);
-	}
-	game.fruit_count = 0;
-    game.fruit_pos = NULL;
-	game.mlx = NULL;
-	game.win = NULL;
-	game.movement_count = 0;
+		return (ft_printf("Usage: ./so_long <map_file>\n"), 1);
+	game = (t_game){0};
 	imgs = (t_imgs){0};
 	game.imgs = &imgs;
 	read_map(&game, argv[1]);

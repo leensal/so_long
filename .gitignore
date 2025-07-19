@@ -1,4 +1,5 @@
 mlx
-a.out
+so_long
 *.o
 *.a
+.DS_Store

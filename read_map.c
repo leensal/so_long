@@ -6,7 +6,7 @@
 /*   By: lsahloul <lsahloul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 18:45:56 by lsahloul          #+#    #+#             */
-/*   Updated: 2025/07/17 20:45:22 by lsahloul         ###   ########.fr       */
+/*   Updated: 2025/07/19 19:11:23 by lsahloul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,8 @@ char	*read_file(int fd)
 void	validate_rows(t_game *game, char *file)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	j = 0;
 	while (file[i])
 	{
 		if (file[i] == '\n' && file[i + 1] && file[i + 1] == '\n')
@@ -118,7 +116,7 @@ void	read_map(t_game *game, char *map_name)
 		if (game->map[i + 1]
 			&& ft_strlen(game->map[i]) != ft_strlen(game->map[i + 1]))
 			murder(game, "Error reading map file\n");
-	game->column_count = ft_strlen(game->map[i-1]);
+	game->column_count = ft_strlen(game->map[i - 1]);
 	game->row_count = i;
 	validate_columns(game);
 }
